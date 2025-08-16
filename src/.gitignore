@@ -1,0 +1,69 @@
+# Build results
+bin/
+obj/
+[Bb]uild/
+[Ll]og/
+[Ll]ogs/
+
+# Rider
+.idea/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# VS Code
+.vscode/
+
+# Visual Studio
+*.dbmdl
+*.bak
+*.backup
+*.log
+*.ldf
+*.mdf
+
+# NuGet
+*.nupkg
+*.snupkg
+*.nuspec
+*.ncrunchsolution
+*.ncrunchproject
+.nuget/
+packages/
+project.lock.json
+project.fragment.lock.json
+
+# DotNet
+*.dll
+*.exe
+*.pdb
+*.cache
+*.config
+*.csproj.user
+*.props
+*.targets
+
+# Publish
+*.pubxml
+*.publishproj
+publish/
+wwwroot/
+
+# Entity Framework
+*.db
+*.db-shm
+*.db-wal
+Migrations/obj/
+
+# Logs
+*.log
+logs/
+
+# Other
+node_modules/
+dist/
+tmp/
+temp/
