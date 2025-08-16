@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\BaseStarterPack.API.props" />
+</Project>

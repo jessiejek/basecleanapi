@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<!-- IMPORTANT: do NOT enable invariant globalization here -->
+		<!-- <InvariantGlobalization>true</InvariantGlobalization> -->
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.8" />
+		<!-- Serilog is optional; add if you turned it on in Program.cs -->
+		<!-- <PackageReference Include="Serilog.AspNetCore" Version="8.0.1" /> -->
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\\BaseStarterPack.Application\\BaseStarterPack.Application.csproj" />
+		<ProjectReference Include="..\\BaseStarterPack.Infrastructure\\BaseStarterPack.Infrastructure.csproj" />
+	</ItemGroup>
+</Project>

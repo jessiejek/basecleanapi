@@ -1,0 +1,11 @@
+C:\Users\0013969\Downloads\BaseStarterPack_Jwt_v3\src\BaseStarterPack.Domain\bin\Debug\net8.0\BaseStarterPack.Domain.deps.json
+C:\Users\0013969\Downloads\BaseStarterPack_Jwt_v3\src\BaseStarterPack.Domain\bin\Debug\net8.0\BaseStarterPack.Domain.dll
+C:\Users\0013969\Downloads\BaseStarterPack_Jwt_v3\src\BaseStarterPack.Domain\bin\Debug\net8.0\BaseStarterPack.Domain.pdb
+C:\Users\0013969\Downloads\BaseStarterPack_Jwt_v3\src\BaseStarterPack.Domain\obj\Debug\net8.0\BaseStarterPack.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\0013969\Downloads\BaseStarterPack_Jwt_v3\src\BaseStarterPack.Domain\obj\Debug\net8.0\BaseStarterPack.Domain.AssemblyInfoInputs.cache
+C:\Users\0013969\Downloads\BaseStarterPack_Jwt_v3\src\BaseStarterPack.Domain\obj\Debug\net8.0\BaseStarterPack.Domain.AssemblyInfo.cs
+C:\Users\0013969\Downloads\BaseStarterPack_Jwt_v3\src\BaseStarterPack.Domain\obj\Debug\net8.0\BaseStarterPack.Domain.csproj.CoreCompileInputs.cache
+C:\Users\0013969\Downloads\BaseStarterPack_Jwt_v3\src\BaseStarterPack.Domain\obj\Debug\net8.0\BaseStarterPack.Domain.dll
+C:\Users\0013969\Downloads\BaseStarterPack_Jwt_v3\src\BaseStarterPack.Domain\obj\Debug\net8.0\refint\BaseStarterPack.Domain.dll
+C:\Users\0013969\Downloads\BaseStarterPack_Jwt_v3\src\BaseStarterPack.Domain\obj\Debug\net8.0\BaseStarterPack.Domain.pdb
+C:\Users\0013969\Downloads\BaseStarterPack_Jwt_v3\src\BaseStarterPack.Domain\obj\Debug\net8.0\ref\BaseStarterPack.Domain.dll
