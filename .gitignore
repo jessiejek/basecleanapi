@@ -1,0 +1,72 @@
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Debug / Release folders
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+
+# Rider / JetBrains
+.idea/
+*.iml
+
+# Others
+*.dbmdl
+*.bak
+*.backup
+*.ldf
+*.mdf
+
+# Resharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# VS Code
+.vscode/
+
+# Test results
+[Tt]est[Rr]esult*/
+[Tt]est[Rr]esults/
+*.VisualState.xml
+*.TestResult.xml
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+
+# Entity Framework Migrations artifacts
+*.cache
+*.ide
+
+# Azure / publish
+*.publishsettings
+*.azurePubxml
+PublishProfiles/
+
+# Logs
+*.log
+logs/
+
+# Coverage
+*.coverage
+*.coveragexml
+
+# OS generated
+.DS_Store
+Thumbs.db
