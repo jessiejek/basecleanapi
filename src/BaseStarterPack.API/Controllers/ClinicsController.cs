@@ -1,3 +1,4 @@
+using BaseStarterPack.Application.Common;
 using BaseStarterPack.Application.Services;
 using BaseStarterPack.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
@@ -11,19 +12,28 @@ namespace BaseStarterPack.API.Controllers;
 public class ClinicsController(ClinicService service) : ControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Clinic>>> GetAll(CancellationToken ct)
-        => Ok(await service.GetAllAsync(ct));
+    public async Task<ActionResult<ApiResponse<IEnumerable<Clinic>>>> GetAll(CancellationToken ct)
+    {
+        var clinics = await service.GetAllAsync(ct);
+        if (clinics is null || !clinics.Any())
+            return BadRequest(ApiResponse<object>.Fail("No record found"));
+
+        return Ok(ApiResponse<IEnumerable<Clinic>>.Success(clinics, "Successfully retrieved data"));
+    }
 
     [HttpGet("{clinicId:guid}")]
-    public async Task<ActionResult<Clinic>> GetById(Guid clinicId, CancellationToken ct)
+    public async Task<ActionResult<ApiResponse<Clinic>>> GetById(Guid clinicId, CancellationToken ct)
     {
         var clinic = await service.GetByIdAsync(clinicId, ct);
-        return clinic is null ? NotFound() : Ok(clinic);
+        if (clinic is null)
+            return NotFound(ApiResponse<object>.Fail("No record found"));
+
+        return Ok(ApiResponse<Clinic>.Success(clinic, "Successfully retrieved data"));
     }
 
     [HttpPost]
     [Authorize(Roles = "Admin")]
-    public async Task<ActionResult<object>> Create([FromBody] CreateClinicRequest request, CancellationToken ct)
+    public async Task<ActionResult<ApiResponse<object>>> Create([FromBody] CreateClinicRequest request, CancellationToken ct)
     {
         var clinic = new Clinic
         {
@@ -38,11 +48,13 @@ public class ClinicsController(ClinicService service) : ControllerBase
         return CreatedAtAction(
             nameof(GetById),
             new { clinicId },
-            new
-            {
-                clinicId,
-                id = createdClinic?.Id
-            });
+            ApiResponse<object>.Success(
+                new
+                {
+    
+                    id = createdClinic?.Id
+                },
+                "Clinic created successfully."));
     }
     [HttpPut("{clinicId:guid}")]
     [Authorize(Roles = "Admin")]
@@ -51,28 +63,21 @@ public class ClinicsController(ClinicService service) : ControllerBase
         [FromBody] UpdateClinicRequest request,
         CancellationToken ct)
     {
-        // 1. Fetch directly by ID (no full table scan)
         var clinic = await service.GetByIdAsync(clinicId, ct);
         if (clinic is null)
-            return NotFound();
+            return NotFound(ApiResponse<object>.Fail("No record found"));
 
-        // 2. Map updates
         clinic.Status = request.Status;
         clinic.ClinicNo = request.ClinicNo;
         clinic.Location = request.Location;
         clinic.Landmark = request.Landmark;
 
-        // 3. Save
         var affected = await service.UpdateAsync(clinic, ct);
 
-        // 4. Response strategy
         if (affected == 0)
-        {
-            // No actual changes were made
-            return Ok(new { message = "No changes detected" });
-        }
+            return Ok(ApiResponse<object>.EmptySuccess("No changes detected"));
 
-        return NoContent(); // standard for successful update
+        return Ok(ApiResponse<object>.EmptySuccess("Clinic updated successfully"));
     }
 
     [HttpDelete("{clinicId:Guid}")]
@@ -80,6 +85,9 @@ public class ClinicsController(ClinicService service) : ControllerBase
     public async Task<IActionResult> Delete(Guid clinicId, CancellationToken ct)
     {
         var ok = await service.DeleteAsync(clinicId, ct);
-        return ok ? NoContent() : NotFound();
+        if (!ok)
+            return NotFound(ApiResponse<object>.Fail("No record found"));
+
+        return Ok(ApiResponse<object>.EmptySuccess("Clinic deleted successfully"));
     }
 }

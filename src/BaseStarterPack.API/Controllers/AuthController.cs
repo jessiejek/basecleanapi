@@ -1,3 +1,4 @@
+using BaseStarterPack.Application.Common;
 using BaseStarterPack.Application.DTOs;
 using BaseStarterPack.Application.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -11,67 +12,68 @@ public class AuthController(AuthService auth) : ControllerBase
 {
     [HttpPost("register")]
     [AllowAnonymous]
-    public async Task<ActionResult<AuthResponse>> Register(RegisterRequest req, CancellationToken ct)
+    public async Task<ActionResult<ApiResponse<AuthResponse>>> Register(RegisterRequest req, CancellationToken ct)
     {
         try
         {
             var result = await auth.RegisterAsync(req, ct);
-            return StatusCode(201, result);
+            return StatusCode(201, ApiResponse<AuthResponse>.Success(result, "Registration successful."));
         }
         catch (InvalidOperationException ex)
         {
-            return Conflict(new { message = ex.Message });
+            return Conflict(ApiResponse<object>.Fail(ex.Message));
         }
         catch (Exception ex)
         {
-            // include inner exception message to diagnose schema mismatches
             var detail = ex.InnerException?.Message ?? ex.Message;
-            return Problem(title: "Registration failed", detail: detail, statusCode: 400);
+            return BadRequest(ApiResponse<object>.Fail($"Registration failed: {detail}"));
         }
     }
 
     [HttpPost("login")]
     [AllowAnonymous]
-    public async Task<ActionResult<AuthResponse>> Login(LoginRequest req, CancellationToken ct)
+    public async Task<ActionResult<ApiResponse<AuthResponse>>> Login(LoginRequest req, CancellationToken ct)
     {
         try
         {
             var result = await auth.LoginAsync(req, ct);
-            return Ok(result);
+            return Ok(ApiResponse<AuthResponse>.Success(result, "Login successful."));
         }
         catch (UnauthorizedAccessException ex)
         {
-            return Unauthorized(new { message = ex.Message });
+            return Unauthorized(ApiResponse<object>.Fail(ex.Message));
         }
         catch (Exception ex)
         {
-            return Problem(title: "Login failed", detail: ex.InnerException?.Message ?? ex.Message, statusCode: 400);
+            var detail = ex.InnerException?.Message ?? ex.Message;
+            return BadRequest(ApiResponse<object>.Fail($"Login failed: {detail}"));
         }
     }
 
     [HttpPost("refresh-token")]
     [AllowAnonymous]
-    public async Task<ActionResult<AuthResponse>> Refresh(RefreshTokenRequest req, CancellationToken ct)
+    public async Task<ActionResult<ApiResponse<AuthResponse>>> Refresh(RefreshTokenRequest req, CancellationToken ct)
     {
         try
         {
             var result = await auth.RefreshAsync(req, ct);
-            return Ok(result);
+            return Ok(ApiResponse<AuthResponse>.Success(result, "Token refreshed successfully."));
         }
         catch (UnauthorizedAccessException ex)
         {
-            return Unauthorized(new { message = ex.Message });
+            return Unauthorized(ApiResponse<object>.Fail(ex.Message));
         }
         catch (Exception ex)
         {
-            return Problem(title: "Refresh token failed", detail: ex.InnerException?.Message ?? ex.Message, statusCode: 400);
+            var detail = ex.InnerException?.Message ?? ex.Message;
+            return BadRequest(ApiResponse<object>.Fail($"Refresh token failed: {detail}"));
         }
     }
 
     [HttpPost("forgot-password")]
     [AllowAnonymous]
     public IActionResult ForgotPassword([FromBody] object _)
-        => Ok(new { message = "If the email exists, a reset link will be sent." });
+        => Ok(ApiResponse<object>.EmptySuccess("If the email exists, a reset link will be sent."));
 
    /* [HttpGet("me")]
     [Authorize]
