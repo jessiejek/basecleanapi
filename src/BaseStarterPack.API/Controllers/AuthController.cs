@@ -73,7 +73,7 @@ public class AuthController(AuthService auth) : ControllerBase
     public IActionResult ForgotPassword([FromBody] object _)
         => Ok(new { message = "If the email exists, a reset link will be sent." });
 
-    [HttpGet("me")]
+   /* [HttpGet("me")]
     [Authorize]
     public async Task<IActionResult> Me(CancellationToken ct)
     {
@@ -82,5 +82,5 @@ public class AuthController(AuthService auth) : ControllerBase
         if (!Guid.TryParse(sub, out var id)) return Unauthorized();
         var me = await auth.GetCurrentUserAsync(id, ct);
         return me is null ? NotFound() : Ok(me);
-    }
+    }*/
 }
