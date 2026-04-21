@@ -2,6 +2,7 @@ using BaseStarterPack.Application.Interfaces.Common;
 using BaseStarterPack.Application.Interfaces.Repositories;
 using BaseStarterPack.Application.Interfaces.Services;
 using BaseStarterPack.Infrastructure.Context;
+using BaseStarterPack.Infrastructure.Data;
 using BaseStarterPack.Infrastructure.Repositories;
 using BaseStarterPack.Infrastructure.Repositories.Common;
 using BaseStarterPack.Infrastructure.Security;
@@ -29,6 +30,9 @@ public static class DependencyInjection
         services.AddScoped<IUsersRepository, UsersRepository>();
         services.AddScoped<IRefreshTokensRepository, RefreshTokensRepository>();
         services.AddScoped<IClinicsRepository, ClinicsRepository>();
+
+        services.AddScoped<IDbConnectionFactory, DbConnectionFactory>();
+        services.AddScoped<ISqlDataAccess, SqlDataAccess>();
 
         services.AddScoped<IJwtTokenService, JwtTokenService>();
 

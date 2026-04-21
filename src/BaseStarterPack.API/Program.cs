@@ -2,11 +2,39 @@ using BaseStarterPack.API;
 using BaseStarterPack.Application;
 using BaseStarterPack.Infrastructure;
 using BaseStarterPack.Infrastructure.Context;
+using DotNetEnv;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// load .env values if present and allow env vars to override config
+var envFilePath = Path.Combine(builder.Environment.ContentRootPath, ".env");
+if (File.Exists(envFilePath))
+{
+    Env.Load(envFilePath);
+}
+
+builder.Configuration.AddEnvironmentVariables();
+
+// resolve ${ENV_VAR} placeholders in appsettings connection strings
+var connectionPlaceholders = builder.Configuration.GetSection("ConnectionStrings").GetChildren().ToList();
+foreach (var item in connectionPlaceholders)
+{
+    var value = item.Value;
+    if (string.IsNullOrWhiteSpace(value)) continue;
+
+    if (value.StartsWith("${", StringComparison.Ordinal) && value.EndsWith("}", StringComparison.Ordinal))
+    {
+        var envKey = value[2..^1];
+        var envValue = Environment.GetEnvironmentVariable(envKey);
+        if (!string.IsNullOrWhiteSpace(envValue))
+        {
+            builder.Configuration[$"ConnectionStrings:{item.Key}"] = envValue;
+        }
+    }
+}
 
 // layers
 builder.Services.AddPresentation();
